@@ -1,0 +1,45 @@
+{% extends "one_column.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<h2 class="text-center">Formularz kontaktowy</h2>
+<div class="col-md-6 offset-md-3"></div>
+
+  <form action="{% url 'contact' %}" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="submit-link-row">{{ field.label_tag }}<br>{{ field }}</div>
+        {% if form.errors %}
+          {% for error in field.errors %}
+          <p class="error-message">
+            <strong>{{ error|escape }}</strong></p>
+          {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+    <!-- <script src='https://www.google.com/recaptcha/api.js'></script>
+    <div class="g-recaptcha" data-sitekey="6LdVEWcUAAAAAKf3xzNPUomSnueTd1NIOH-8Obr1"></div> -->
+    <br>
+
+    <!-- <button type="submit" name="submit" class="signup" value=1>Wyślij!</button> -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <button type="submit" value=1 class="g-recaptcha signup" id="recaptcha" name="submit"
+    data-sitekey="6Ldkf5cUAAAAAJYIJSB5l-akAN_efBssFaMJLQNe" data-callback='onSubmit'>Wyślij!</button>
+
+    <a href="{% url 'clear' %}" id="clear" name="clear" class="btn default">Wyczyść!</a>
+
+  </form>
+  {% if messages %}
+    {% for message in messages %}
+      <div {% if message.tags  %} class="{{message.tags}}" {% endif %}
+      role="alert">
+            {{ message }}
+      </div>
+    {% endfor %}
+
+  {% else %}
+</div>
+{% endif %}
+
+{% endblock %}

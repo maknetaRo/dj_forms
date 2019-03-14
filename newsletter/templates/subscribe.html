@@ -1,0 +1,36 @@
+
+{% load staticfiles %}
+
+
+{% block content %}
+
+<h3 class="text-center">Zapisz się na newsletter</h3>
+
+    <form method="POST">
+
+      {% csrf_token %}
+
+          {{ subscribe_form }}
+          <!-- <script src='https://www.google.com/recaptcha/api.js'></script>
+          <div class="g-recaptcha" data-sitekey="6LdVEWcUAAAAAKf3xzNPUomSnueTd1NIOH-8Obr1"></div>
+          <button type="submit" name="submit" class="signup" value=1>Zapisz się!</button> -->
+
+          <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+          <button type="submit" value=1 class="g-recaptcha signup" id="recaptcha" name="submit"
+           data-sitekey="6Ldkf5cUAAAAAJYIJSB5l-akAN_efBssFaMJLQNe" data-callback='onSubmit'>Zapisz się!</button>
+
+    </form>
+    {% if messages %}
+      {% for message in messages %}
+        <div {% if message.tags  %} class="{{message.tags}}" {% endif %}
+        role="alert">
+              {{ message }}
+        </div>
+      {% endfor %}
+
+    {% else %}
+  {% endif %}
+
+
+{% endblock %}
