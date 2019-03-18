@@ -12,3 +12,21 @@
 //       })
 //     })
 //   }
+<script>
+var on_code_form_submit = function(e) {
+  var response = grecaptcha.getResponse();
+  if (!response) {
+    e.preventDefault();
+    $(this).attr('data-submit-please', 'true')
+    grecaptcha.execute();
+  } else {
+    $(this).find('input[name="recaptcha"]').val(response)
+  }
+};
+
+function recaptcha_submit(token) {
+  var $form = $('form[data-submit-please="true"]');
+  $form.find('input[name="recaptcha"]').val(token)
+  $form.submit();
+}
+</script>
